@@ -13,7 +13,7 @@ namespace GAP.Repositories
         {
 
         }
-
+        
         public DbSet<Client> Client { get; set; }
         public DbSet<CoveringType> CoveringType { get; set; }
         public DbSet<RyskType> RyskType { get; set; }
