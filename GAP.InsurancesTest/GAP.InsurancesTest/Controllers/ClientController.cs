@@ -13,14 +13,14 @@ namespace GAP.InsurancesTest.Controllers
     {
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetAll()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string GetClientById(int id)
         {
             return "value";
         }

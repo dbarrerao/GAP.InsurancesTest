@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Businnes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GAP.Models\GAP.Models.csproj" />
+  </ItemGroup>
+
 </Project>
