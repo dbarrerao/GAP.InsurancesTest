@@ -6,7 +6,7 @@ namespace GAP.Models
 {
     public class Client
     {
-        public int ClientId { get; set; }
+        public int Id { get; set; }
         public string Document { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }

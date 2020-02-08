@@ -6,7 +6,7 @@ namespace GAP.Models
 {
     public class CoveringType
     {
-        public int CoveringTypeId { get; set; }
+        public int Id { get; set; }
 
         public string Covering { get; set; }
 
