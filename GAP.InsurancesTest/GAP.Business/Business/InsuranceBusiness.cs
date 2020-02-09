@@ -1,5 +1,6 @@
 ﻿using GAP.Business.Interfaces;
 using GAP.Models;
+using GAP.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,36 +9,37 @@ namespace GAP.Business.Businnes
 {
     public class InsuranceBusiness : IInsuranceBusiness
     {
-        private IInsuranceBusiness _insuranceBusiness;
+        private IInsuranceRepository _insuranceRepository;
 
-        public InsuranceBusiness(IInsuranceBusiness insuranceBusiness)
+        public InsuranceBusiness(IInsuranceRepository insuranceRepository)
         {
-            _insuranceBusiness = insuranceBusiness;
+            _insuranceRepository = insuranceRepository;
         }
+
 
         public bool DelInsuranceById(int id)
         {
-            return _insuranceBusiness.DelInsuranceById(id);
+            return _insuranceRepository.DelInsuranceById(id);
         }
 
         public List<Insurance> GetAll()
         {
-            return _insuranceBusiness.GetAll();
+            return _insuranceRepository.GetAll();
         }
 
         public Insurance GetById(int id)
         {
-            return _insuranceBusiness.GetById(id);
+            return _insuranceRepository.GetById(id);
         }
 
         public List<Insurance> GetInsuranceByClient(int id)
         {
-            return _insuranceBusiness.GetInsuranceByClient(id);
+            return _insuranceRepository.GetInsuranceByClient(id);
         }
 
         public bool InsertInsurance(Insurance insurance)
         {
-            return _insuranceBusiness.InsertInsurance(insurance);
+            return _insuranceRepository.InsertInsurance(insurance);
         }
 
         public bool UpdInsuranceById(Insurance insurance)

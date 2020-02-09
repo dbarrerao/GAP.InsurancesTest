@@ -7,15 +7,14 @@ using System.Text;
 
 namespace GAP.Repositories.Repository
 {
-    class InsuranceRepository : IInsuranceRepository
+    public class InsuranceRepository : IInsuranceRepository
     {
         private InsuranceContext _context;
         public InsuranceRepository(InsuranceContext context)
         {
             _context = context; 
         }
-
-
+        
         public bool DelInsuranceById(int id)
         {
             bool result = true;
@@ -36,17 +35,38 @@ namespace GAP.Repositories.Repository
 
         public List<Insurance> GetAll()
         {
-            return _context.Insurance.ToList();
+            List<Insurance> listInsurance = _context.Insurance.ToList();
+
+            foreach(Insurance item in listInsurance)
+            {
+                item.RiskType = _context.RyskType.Find(item.RiskTypeId);
+                item.CoveringType = _context.CoveringType.Find(item.CoveringTypeId);
+            }
+    
+            return listInsurance;
         }
 
         public Insurance GetById(int id)
         {
-            return _context.Insurance.FirstOrDefault(x => x.Id == id);
+            Insurance insurance= _context.Insurance.FirstOrDefault(x => x.Id == id);
+
+            insurance.RiskType = _context.RyskType.Find(id);
+            insurance.CoveringType = _context.CoveringType.Find(id);
+
+            return insurance;
         }
 
         public List<Insurance> GetInsuranceByClient(int id)
         {
-            return _context.Insurance.Where(x => x.Id == id).ToList();
+            List<Insurance> listInsurance = _context.Insurance.Where(x => x.Id == id).ToList();
+
+            foreach (Insurance item in listInsurance)
+            {
+                item.RiskType = _context.RyskType.Find(item.RiskTypeId);
+                item.CoveringType = _context.CoveringType.Find(item.CoveringTypeId);
+            }
+
+            return listInsurance;
         }
 
         public bool InsertInsurance(Insurance insurance)
