@@ -39,6 +39,9 @@ namespace GAP.Business.Businnes
 
         public bool InsertInsurance(Insurance insurance)
         {
+           
+            
+            
             return _insuranceRepository.InsertInsurance(insurance);
         }
 

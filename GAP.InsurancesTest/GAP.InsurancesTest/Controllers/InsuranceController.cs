@@ -57,7 +57,7 @@ namespace GAP.InsurancesTest.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public bool Post([FromBody]Insurance insurance)
+        public ActionResult<bool> Post([FromBody]Insurance insurance)      
         {
             return _insuranceBusiness.InsertInsurance(insurance);
         }
