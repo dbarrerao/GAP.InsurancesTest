@@ -42,9 +42,9 @@ namespace GAP.Business.Businnes
             return clientRepository.UpdClientById(client);
         }
 
-        public void InsertClient(Client client)
+        public bool InsertClient(Client client)
         {
-            throw new NotImplementedException();
+            return clientRepository.InsertClient(client);
         }
     }
 }

@@ -41,11 +41,9 @@ namespace GAP.InsurancesTest.Controllers
         }
        
         [HttpPost]
-        public ActionResult Post([FromBody] Client client)
+        public ActionResult<bool> Post([FromBody] Client client)
         {
-            clientBusiness.InsertClient(client);
-
-            return new CreatedAtRouteResult("GetClient", new { document = client.Document }, client);
+             return clientBusiness.InsertClient(client);
         }
 
         // PUT api/<controller>/5

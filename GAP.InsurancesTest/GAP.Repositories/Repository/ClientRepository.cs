@@ -53,14 +53,17 @@ namespace GAP.Repositories.Repository
             return client;
         }
 
-        public void InsertClient(Client client)
+        public bool InsertClient(Client client)
         {
-            throw new NotImplementedException();
+            context.Client.Add(client);
+            context.SaveChanges();
+            return true;
+
         }
 
         public bool UpdClientById(Client client)
         {
-            context.Update(client);
+            context.Entry(client).State = EntityState.Modified;
             context.SaveChanges();
             return true;
         }
