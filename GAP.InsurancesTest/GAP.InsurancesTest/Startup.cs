@@ -1,6 +1,8 @@
 using GAP.Business.Businnes;
 using GAP.Business.Interfaces;
 using GAP.Repositories;
+using GAP.Repositories.Interfaces;
+using GAP.Repositories.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,7 @@ namespace GAP.InsurancesTest
             services.AddControllersWithViews();
 
             services.AddScoped<IClientBusiness, ClientBusiness>();
+            services.AddScoped<IClientRepository, ClientRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

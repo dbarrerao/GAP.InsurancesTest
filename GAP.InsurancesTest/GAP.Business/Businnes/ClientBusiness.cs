@@ -1,5 +1,6 @@
 ﻿using GAP.Business.Interfaces;
 using GAP.Models;
+using GAP.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,14 @@ namespace GAP.Business.Businnes
 {
     public class ClientBusiness : IClientBusiness
     {
+
+        private IClientRepository clientRepository;
+
+        public ClientBusiness(IClientRepository _clientRepository)
+        {
+            clientRepository = _clientRepository;
+        }
+
         public void DelClientById(int id)
         {
             throw new NotImplementedException();
@@ -15,12 +24,12 @@ namespace GAP.Business.Businnes
 
         public List<Client> GetAll()
         {
-            throw new NotImplementedException();
+            return clientRepository.GetAll();
         }
 
         public Client GetByDocument(string documento)
         {
-            throw new NotImplementedException();
+            return clientRepository.GetByDocument(documento);
         }
 
         public Client GetById(int id)

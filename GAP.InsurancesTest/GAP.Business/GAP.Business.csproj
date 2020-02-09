@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GAP.Models\GAP.Models.csproj" />
+    <ProjectReference Include="..\GAP.Repositories\GAP.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
