@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GAP.Business.Interfaces;
+using GAP.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,36 +13,69 @@ namespace GAP.InsurancesTest.Controllers
     [Route("api/[controller]")]
     public class ClientController : Controller
     {
-        // GET: api/<controller>
+        private IClientBusiness clientBusiness;
+
+
+        public ClientController(IClientBusiness _clientBusiness)
+        {
+            clientBusiness = _clientBusiness;
+        }        
+        
         [HttpGet]
-        public IEnumerable<string> GetAll()
+        public ActionResult<IEnumerable<Client>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return clientBusiness.GetAll();
         }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string GetClientById(int id)
+        
+        [HttpGet("{id}", Name = "GetClient")]
+        public ActionResult<Client> GetClientById(string document)
         {
-            return "value";
-        }
+            var client = clientBusiness.GetByDocument(document);
 
-        // POST api/<controller>
+            if(client == null)
+            {
+                return NotFound();
+            }
+
+            return client;
+        }
+       
         [HttpPost]
-        public void Post([FromBody]string value)
+        public ActionResult Post([FromBody] Client client)
         {
+            clientBusiness.InsertClient(client);
+
+            return new CreatedAtRouteResult("GetClient", new { doccument = client.Document }, client);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public ActionResult Put(int id, [FromBody]Client client)
         {
+            if(id != client.Id)
+            {
+                return BadRequest();
+            }
+
+            clientBusiness.UpdClientById(id);
+
+            return Ok();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Client> Delete(int id)
         {
+            var client = clientBusiness.GetById(id);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            clientBusiness.DelClientById(id);
+
+            return Ok();
         }
     }
 }

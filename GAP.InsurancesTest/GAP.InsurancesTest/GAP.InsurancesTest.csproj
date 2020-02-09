@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GAP.Business\GAP.Business.csproj" />
     <ProjectReference Include="..\GAP.Repositories\GAP.Repositories.csproj" />
   </ItemGroup>
 

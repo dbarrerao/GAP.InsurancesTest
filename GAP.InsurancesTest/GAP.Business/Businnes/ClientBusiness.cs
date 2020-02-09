@@ -23,7 +23,17 @@ namespace GAP.Business.Businnes
             throw new NotImplementedException();
         }
 
+        public Client GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Client UpdClientById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertClient(Client client)
         {
             throw new NotImplementedException();
         }

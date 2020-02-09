@@ -9,6 +9,8 @@ namespace GAP.Business.Interfaces
     {        
         List<Client> GetAll();       
         Client GetByDocument(string documento);
+        Client GetById(int id);
+        void InsertClient(Client client);
         Client UpdClientById(int id);
         void DelClientById(int id);        
     }
