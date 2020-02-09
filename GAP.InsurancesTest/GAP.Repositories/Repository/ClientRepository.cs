@@ -10,18 +10,18 @@ namespace GAP.Repositories.Repository
 {
     public class ClientRepository : IClientRepository
     {
-        private InsuranceContext context;
+        private InsuranceContext _context;
 
-        public ClientRepository(InsuranceContext _context)
+        public ClientRepository(InsuranceContext context)
         {
-            context = _context;  
+            _context = context;  
         }
 
         public bool DelClientById(int id)
         {
             bool accion = true;
 
-            Client client = context.Client.FirstOrDefault(x => x.Id == id);
+            Client client = _context.Client.FirstOrDefault(x => x.Id == id);
 
             if (client == null)
             {
@@ -29,8 +29,8 @@ namespace GAP.Repositories.Repository
                 return accion;
             }
 
-            context.Client.Remove(client);
-            context.SaveChanges();
+            _context.Client.Remove(client);
+            _context.SaveChanges();
 
             return accion;
 
@@ -38,33 +38,33 @@ namespace GAP.Repositories.Repository
 
         public List<Client> GetAll()
         {
-            return context.Client.ToList();
+            return _context.Client.ToList();
         }
 
         public Client GetByDocument(int documento)
         {
-            return context.Client.FirstOrDefault(x => x.Document == documento);
+            return _context.Client.FirstOrDefault(x => x.Document == documento);
         }
 
         public Client GetById(int id)
         {
-            Client client = context.Client.FirstOrDefault(x => x.Id == id);
+            Client client = _context.Client.FirstOrDefault(x => x.Id == id);
 
             return client;
         }
 
         public bool InsertClient(Client client)
         {
-            context.Client.Add(client);
-            context.SaveChanges();
+            _context.Client.Add(client);
+            _context.SaveChanges();
             return true;
 
         }
 
         public bool UpdClientById(Client client)
         {
-            context.Entry(client).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(client).State = EntityState.Modified;
+            _context.SaveChanges();
             return true;
         }
     }

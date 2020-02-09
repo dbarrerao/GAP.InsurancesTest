@@ -13,24 +13,24 @@ namespace GAP.InsurancesTest.Controllers
     [Route("api/[controller]")]
     public class ClientController : Controller
     {
-        private IClientBusiness clientBusiness;
+        private IClientBusiness _clientBusiness;
 
 
-        public ClientController(IClientBusiness _clientBusiness)
+        public ClientController(IClientBusiness clientBusiness)
         {
-            clientBusiness = _clientBusiness;
+            _clientBusiness = clientBusiness;
         }        
         
         [HttpGet]
         public ActionResult<IEnumerable<Client>> GetAll()
         {
-            return clientBusiness.GetAll();
+            return _clientBusiness.GetAll();
         }
         
         [HttpGet("{document}")]
         public ActionResult<Client> GetClientByDocument(int document)
         {
-            var client = clientBusiness.GetByDocument(document);
+            var client = _clientBusiness.GetByDocument(document);
 
             if(client == null)
             {
@@ -43,7 +43,7 @@ namespace GAP.InsurancesTest.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] Client client)
         {
-             return clientBusiness.InsertClient(client);
+             return _clientBusiness.InsertClient(client);
         }
 
         // PUT api/<controller>/5
@@ -56,7 +56,7 @@ namespace GAP.InsurancesTest.Controllers
                 return BadRequest();
             }
 
-            bool result = clientBusiness.UpdClientById(client);
+            bool result = _clientBusiness.UpdClientById(client);
 
             return result;
         }
@@ -65,7 +65,7 @@ namespace GAP.InsurancesTest.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {  
-            bool result = clientBusiness.DelClientById(id);
+            bool result = _clientBusiness.DelClientById(id);
 
             return result;
         }

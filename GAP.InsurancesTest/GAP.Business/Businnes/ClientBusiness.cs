@@ -10,26 +10,26 @@ namespace GAP.Business.Businnes
     public class ClientBusiness : IClientBusiness
     {
 
-        private IClientRepository clientRepository;
+        private IClientRepository _clientRepository;
 
-        public ClientBusiness(IClientRepository _clientRepository)
+        public ClientBusiness(IClientRepository clientRepository)
         {
-            clientRepository = _clientRepository;
+            _clientRepository = clientRepository;
         }
 
         public bool DelClientById(int id)
         {
-            return clientRepository.DelClientById(id);
+            return _clientRepository.DelClientById(id);
         }
 
         public List<Client> GetAll()
         {
-            return clientRepository.GetAll();
+            return _clientRepository.GetAll();
         }
 
         public Client GetByDocument(int documento)
         {
-            return clientRepository.GetByDocument(documento);
+            return _clientRepository.GetByDocument(documento);
         }
 
         public Client GetById(int id)
@@ -39,12 +39,12 @@ namespace GAP.Business.Businnes
 
         public bool UpdClientById(Client client)
         {
-            return clientRepository.UpdClientById(client);
+            return _clientRepository.UpdClientById(client);
         }
 
         public bool InsertClient(Client client)
         {
-            return clientRepository.InsertClient(client);
+            return _clientRepository.InsertClient(client);
         }
     }
 }
