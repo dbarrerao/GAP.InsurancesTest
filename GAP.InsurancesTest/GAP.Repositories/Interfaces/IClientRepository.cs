@@ -3,15 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GAP.Business.Interfaces
+namespace GAP.Repositories.Interfaces
 {
-    public interface IClientBusiness
-    {        
-        List<Client> GetAll();       
+    public interface IClientRepository
+    {
+        List<Client> GetAll();
         Client GetByDocument(string documento);
         Client GetById(int id);
         void InsertClient(Client client);
-        void UpdClientById(int id);
-        void DelClientById(int id);        
+        Client UpdClientById(int id);
+        void DelClientById(int id);
     }
+
+}
 }
