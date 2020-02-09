@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GAP.Models
 {
-    public class RyskType
+    public class RiskType
     {
         public int Id { get; set; }
 

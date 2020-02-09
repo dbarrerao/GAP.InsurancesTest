@@ -11,7 +11,7 @@ namespace GAP.Business.Interfaces
         Client GetByDocument(int documento);
         Client GetById(int id);
         void InsertClient(Client client);
-        void UpdClientById(int id);
-        void DelClientById(int id);        
+        bool UpdClientById(Client client);
+        bool DelClientById(int id);        
     }
 }

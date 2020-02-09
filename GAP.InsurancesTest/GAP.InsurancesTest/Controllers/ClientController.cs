@@ -27,8 +27,8 @@ namespace GAP.InsurancesTest.Controllers
             return clientBusiness.GetAll();
         }
         
-        [HttpGet("{document}", Name = "GetClient")]
-        public ActionResult<Client> GetClientById(int document)
+        [HttpGet("{document}")]
+        public ActionResult<Client> GetClientByDocument(int document)
         {
             var client = clientBusiness.GetByDocument(document);
 
@@ -50,32 +50,26 @@ namespace GAP.InsurancesTest.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody]Client client)
+        public ActionResult<bool> Put(int id, [FromBody] Client client)
         {
+            
             if(id != client.Id)
             {
                 return BadRequest();
             }
 
-            clientBusiness.UpdClientById(id);
+            bool result = clientBusiness.UpdClientById(client);
 
-            return Ok();
+            return result;
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public ActionResult<Client> Delete(int id)
-        {
-            var client = clientBusiness.GetById(id);
+        public bool Delete(int id)
+        {  
+            bool result = clientBusiness.DelClientById(id);
 
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            clientBusiness.DelClientById(id);
-
-            return Ok();
+            return result;
         }
     }
 }

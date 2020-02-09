@@ -17,9 +17,9 @@ namespace GAP.Business.Businnes
             clientRepository = _clientRepository;
         }
 
-        public void DelClientById(int id)
+        public bool DelClientById(int id)
         {
-            throw new NotImplementedException();
+            return clientRepository.DelClientById(id);
         }
 
         public List<Client> GetAll()
@@ -37,9 +37,9 @@ namespace GAP.Business.Businnes
             throw new NotImplementedException();
         }
 
-        public void UpdClientById(int id)
+        public bool UpdClientById(Client client)
         {
-            throw new NotImplementedException();
+            return clientRepository.UpdClientById(client);
         }
 
         public void InsertClient(Client client)

@@ -1,5 +1,6 @@
 ﻿using GAP.Models;
 using GAP.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,23 @@ namespace GAP.Repositories.Repository
             context = _context;  
         }
 
-        public void DelClientById(int id)
+        public bool DelClientById(int id)
         {
-            throw new NotImplementedException();
+            bool accion = true;
+
+            Client client = context.Client.FirstOrDefault(x => x.Id == id);
+
+            if (client == null)
+            {
+                accion = false;
+                return accion;
+            }
+
+            context.Client.Remove(client);
+            context.SaveChanges();
+
+            return accion;
+
         }
 
         public List<Client> GetAll()
@@ -28,12 +43,14 @@ namespace GAP.Repositories.Repository
 
         public Client GetByDocument(int documento)
         {
-            return context.Client.Find(documento);
+            return context.Client.FirstOrDefault(x => x.Document == documento);
         }
 
         public Client GetById(int id)
         {
-            throw new NotImplementedException();
+            Client client = context.Client.FirstOrDefault(x => x.Id == id);
+
+            return client;
         }
 
         public void InsertClient(Client client)
@@ -41,9 +58,11 @@ namespace GAP.Repositories.Repository
             throw new NotImplementedException();
         }
 
-        public Client UpdClientById(int id)
+        public bool UpdClientById(Client client)
         {
-            throw new NotImplementedException();
+            context.Update(client);
+            context.SaveChanges();
+            return true;
         }
     }
 }
