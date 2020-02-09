@@ -14,6 +14,4 @@ namespace GAP.Repositories.Interfaces
         Client UpdClientById(int id);
         void DelClientById(int id);
     }
-
-}
 }
