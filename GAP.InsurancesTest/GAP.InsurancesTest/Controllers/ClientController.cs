@@ -56,18 +56,16 @@ namespace GAP.InsurancesTest.Controllers
                 return BadRequest();
             }
 
-            bool result = _clientBusiness.UpdClientById(client);
-
-            return result;
+            return _clientBusiness.UpdClientById(client);
+           
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {  
-            bool result = _clientBusiness.DelClientById(id);
-
-            return result;
+            return _clientBusiness.DelClientById(id);
+            
         }
     }
 }
