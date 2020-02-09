@@ -16,6 +16,8 @@ namespace GAP.Models
         public CoveringType CoveringType { get; set; }
         public int RiskTypeId { get; set; }
         public RiskType RiskType { get; set; }
+        public int ClientId { get; set; }
+        public Client Client { get; set; }
 
     }
 }

@@ -43,12 +43,12 @@ namespace GAP.Repositories.Repository
 
         public Client GetByDocument(int documento)
         {
-            return _context.Client.FirstOrDefault(x => x.Document == documento);
+            return _context.Client.Include(x => x.Insurance).FirstOrDefault(x => x.Document == documento);
         }
 
         public Client GetById(int id)
         {
-            Client client = _context.Client.FirstOrDefault(x => x.Id == id);
+            Client client = _context.Client.Include(x => x.Insurance).FirstOrDefault(x => x.Id == id);
 
             return client;
         }

@@ -41,6 +41,20 @@ namespace GAP.InsurancesTest.Controllers
             return insurance;
         }
 
+        [HttpGet]
+        [Route("GetByIdClient/{id}")]
+        public ActionResult<IEnumerable<Insurance>> GetByIdClient(int id)
+        {
+            List<Insurance> lstInsurance = _insuranceBusiness.GetInsuranceByClient(id);
+
+            if (lstInsurance == null)
+            {
+                return NotFound();
+            }
+
+            return lstInsurance;
+        }
+
         // POST api/<controller>
         [HttpPost]
         public bool Post([FromBody]Insurance insurance)

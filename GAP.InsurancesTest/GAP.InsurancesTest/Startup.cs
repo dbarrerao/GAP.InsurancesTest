@@ -28,10 +28,14 @@ namespace GAP.InsurancesTest
            
             services.AddControllersWithViews();
 
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddScoped<IClientBusiness, ClientBusiness>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IInsuranceRepository, InsuranceRepository>();
             services.AddScoped<IInsuranceBusiness, InsuranceBusiness>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 ﻿using GAP.Models;
 using GAP.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,22 +49,23 @@ namespace GAP.Repositories.Repository
 
         public Insurance GetById(int id)
         {
-            Insurance insurance= _context.Insurance.FirstOrDefault(x => x.Id == id);
+            Insurance insurance= _context.Insurance.Include(x=> x.Client).FirstOrDefault(x => x.ClientId == id);
 
-            insurance.RiskType = _context.RyskType.Find(id);
-            insurance.CoveringType = _context.CoveringType.Find(id);
+            insurance.RiskType = _context.RyskType.Find(insurance.RiskTypeId);
+            insurance.CoveringType = _context.CoveringType.Find(insurance.CoveringTypeId);            
 
             return insurance;
         }
 
         public List<Insurance> GetInsuranceByClient(int id)
         {
-            List<Insurance> listInsurance = _context.Insurance.Where(x => x.Id == id).ToList();
+            List<Insurance> listInsurance = _context.Insurance.Include(x => x.Client).Where(x => x.ClientId == id).ToList();
 
             foreach (Insurance item in listInsurance)
             {
                 item.RiskType = _context.RyskType.Find(item.RiskTypeId);
                 item.CoveringType = _context.CoveringType.Find(item.CoveringTypeId);
+                item.Client = _context.Client.Find(item.ClientId);
             }
 
             return listInsurance;
