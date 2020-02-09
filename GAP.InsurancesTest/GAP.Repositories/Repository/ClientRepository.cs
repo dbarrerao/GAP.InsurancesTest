@@ -26,7 +26,7 @@ namespace GAP.Repositories.Repository
             return context.Client.ToList();
         }
 
-        public Client GetByDocument(string documento)
+        public Client GetByDocument(int documento)
         {
             return context.Client.Find(documento);
         }

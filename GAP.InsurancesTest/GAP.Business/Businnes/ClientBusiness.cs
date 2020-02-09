@@ -27,7 +27,7 @@ namespace GAP.Business.Businnes
             return clientRepository.GetAll();
         }
 
-        public Client GetByDocument(string documento)
+        public Client GetByDocument(int documento)
         {
             return clientRepository.GetByDocument(documento);
         }

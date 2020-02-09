@@ -27,8 +27,8 @@ namespace GAP.InsurancesTest.Controllers
             return clientBusiness.GetAll();
         }
         
-        [HttpGet("{id}", Name = "GetClient")]
-        public ActionResult<Client> GetClientById(string document)
+        [HttpGet("{document}", Name = "GetClient")]
+        public ActionResult<Client> GetClientById(int document)
         {
             var client = clientBusiness.GetByDocument(document);
 
@@ -45,7 +45,7 @@ namespace GAP.InsurancesTest.Controllers
         {
             clientBusiness.InsertClient(client);
 
-            return new CreatedAtRouteResult("GetClient", new { doccument = client.Document }, client);
+            return new CreatedAtRouteResult("GetClient", new { document = client.Document }, client);
         }
 
         // PUT api/<controller>/5
