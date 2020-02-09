@@ -49,7 +49,17 @@ namespace GAP.Repositories.Repository
             return _context.Insurance.Where(x => x.Id == id).ToList();
         }
 
-        public bool UpdInsuranceById(Client client)
+        public bool InsertInsurance(Insurance insurance)
+        {
+            bool result;
+            _context.Add(insurance);
+            _context.SaveChanges();
+            result = true;
+
+            return result;
+        }
+
+        public bool UpdInsuranceById(Insurance insurance)
         {
             throw new NotImplementedException();
         }
