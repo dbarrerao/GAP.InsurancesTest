@@ -36,7 +36,7 @@ namespace GAP.Repositories.Repository
 
         public List<Insurance> GetAll()
         {
-            List<Insurance> listInsurance = _context.Insurance.ToList();
+            List<Insurance> listInsurance = _context.Insurance.Include(x => x.Client).ToList();
 
             foreach(Insurance item in listInsurance)
             {

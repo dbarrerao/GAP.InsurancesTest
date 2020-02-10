@@ -1,0 +1,173 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="name">Insurance</label>
+                    <input type="text" id="insuranceName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="insuranceDescription" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="coveringType">Covering Type</label>
+                    <input type="text" id="insuranceCoveringType" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="riskType">Risk Type</label>
+                    <input type="text" id="insuranceRiskTypeId" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="validity">Validity</label>
+                    <input type="text" id="insuranceValidity" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="period">Period</label>
+                    <input type="text" id="insurancePeriod" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" id="insurancePrice" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="client">Client</label>
+                    <input type="text" id="insuranceClient" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 text">
+                    <button type="button" id="addClient" class="btn btn-info">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</br>
+<div class="card">
+
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="txtSearch" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" id="btnSearch" type="button">Search</button>
+    </form>
+
+</div>
+<br />
+<br />
+<div class="panel panel-primary" id="idTable">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered" id="Table">
+            <tr>
+                <th>Insurance</th>
+                <th>Description</th>
+                <th>Covering Type</th>
+                <th>Risk Type</th>
+                <th>Validity</th>
+                <th>Period</th>
+                <th>Price</th>
+                <th>Client</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {        
+        GetAllInsurances();
+        $('#idTable').hide();
+
+
+        $("#btnSearch").on("click", function () {
+            var document = $("#txtSearch").val();
+
+            GetClientByDocument(document);
+        });
+
+        $("#addClient").on("click", function () {
+            
+            insurance = new Object();
+            insurance.name = $("#insuranceName").val();            
+            insurance.description = $("#insuranceDescription").val();           
+            insurance.startDate = $("#insuranceValidity").val();
+            insurance.period = $("#insurancePeriod").val();
+            insurance.price = $("#insurancePrice").val();
+            insurance.coveringType = $("#insuranceCoveringType").val();
+            insurance.riskType = $("#insuranceRiskTypeId").val();
+            insurance.client = $("#insuranceClient").val();
+           
+            AddInsurance(insurance);
+        });
+    });
+
+     function GetAllInsurances() {
+        $.ajax({
+            type: "GET",
+            url: "/api/Insurance",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $('#idTable').show();
+                $.each(data, function (i, item) {
+                    debugger;
+                    var rows =
+                        "<tr>" +
+                        "<td id='Name'>" + item.name + "</td>" +
+                        "<td id='Description'>" + item.description + "</td>" +
+                        "<td id='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
+                        "<td id='RiskTypeId'>" + item.riskType.type + "</td>" +
+                        "<td id='StartDate'>" + item.startDate + "</td>" +
+                        "<td id='Period'>" + item.period + "</td>" +
+                        "<td id='Price'>" + item.price + "</td>" +    
+                        "<td id='Client'>" + item.client.name + "</td>" +
+                        "</tr>";
+                    $('#Table').append(rows);
+                });
+
+                console.log(data);
+            },
+        });
+     }
+
+
+    function AddInsurance(insurance) {
+        debugger;
+        $.ajax({
+            url: "/api/Insurance",
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(insurance),
+            success: function (data) {
+                if (data) {
+                    clearTable();
+                    GetAllInsurances();
+                    MessageConfirmation("Insurance Created");
+                }
+                else {
+                    alert("Error Creating Client.");
+                }
+            },
+            error: function (request, message, error) {
+                handleException(request, message, error);
+            }
+        });
+    }
+
+    function MessageConfirmation(message)
+    {
+        alert(message);
+    }
+
+    function clearTable()
+    {              
+        $("#idTable").find("tr:gt(0)").remove();
+    }
+
+</script>

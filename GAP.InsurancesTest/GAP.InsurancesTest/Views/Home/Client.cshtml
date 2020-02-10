@@ -126,6 +126,7 @@
             }
 
             function AddClient(client) {
+                console.log(JSON.stringify(client));
             $.ajax({
                 url: "/api/Client",
                 type: 'POST',
