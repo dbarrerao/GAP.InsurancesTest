@@ -64,8 +64,9 @@ namespace GAP.InsurancesTest.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public bool Put(int id, [FromBody] Insurance insurance)
         {
+            return _insuranceBusiness.UpdInsuranceById(insurance, id);
         }
 
         // DELETE api/<controller>/5

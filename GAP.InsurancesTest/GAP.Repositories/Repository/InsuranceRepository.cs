@@ -81,9 +81,9 @@ namespace GAP.Repositories.Repository
             return result;
         }
 
-        public bool UpdInsuranceById(Insurance insurance)
+        public bool UpdInsuranceById(Insurance insurance, int id)
         {
-            Insurance insuranceResult = _context.Insurance.FirstOrDefault(x => x.Id == insurance.Id);
+            Insurance insuranceResult = _context.Insurance.FirstOrDefault(x => x.Id == id);
 
             insuranceResult.Name = insurance.Name;
             insuranceResult.Description = insurance.Description;

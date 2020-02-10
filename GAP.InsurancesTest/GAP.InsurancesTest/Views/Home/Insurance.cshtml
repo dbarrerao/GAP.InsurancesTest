@@ -16,11 +16,11 @@
                 </div>
                 <div class="form-group">
                     <label for="coveringTypeId">Covering Type</label>
-                    <input type="text" id="insuranceCoveringType" class="form-control" />
+                    <select id="insuranceCoveringType" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label for="riskTypeId">Risk Type</label>
-                    <input type="text" id="insuranceRiskTypeId" class="form-control" />
+                    <select id="insuranceRiskTypeId" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label for="startDate">Validity</label>
@@ -36,12 +36,13 @@
                 </div>
                 <div class="form-group">
                     <label for="clientId">Client</label>
-                    <input type="text" id="insuranceClient" class="form-control" />
+                    <select id="insuranceClient" class="form-control"></select>
+                    <input type="text" id="idInsurance" class="form-control" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3 text">
-                    <button type="button" id="addClient" class="btn btn-info">Add</button>
+                    <button type="button" id="saveClient" class="btn btn-info">Save</button>
                 </div>
             </div>
         </div>
@@ -72,6 +73,9 @@
                 <th>Period</th>
                 <th>Price</th>
                 <th>Client</th>
+                <th style="display:none">ClientId</th>
+                <th style="display:none">Covering</th>
+                <th style="display:none">Risk</th>
                 <th>Action</th>
             </tr>
         </table>
@@ -85,6 +89,11 @@
         GetAllInsurances();
         $('#idTable').hide();
 
+        getCurrentlyDate();
+        GetAllClient();
+        GetAllCoveringType();
+        GetAllRiskType();
+
 
         $("#btnSearch").on("click", function () {
             var document = $("#txtSearch").val();
@@ -92,13 +101,30 @@
             GetClientByDocument(document);
         });
 
-        $("#addClient").on("click", function () {
+        $("#saveClient").on("click", function () {
+            
+            var client = MapInsurance(); 
 
+            var Id = $("#idInsurance").val();
+            debugger;
+            if (Id == "") {
+                AddInsurance(client);
+            }
+            else {
+                UpdateInsurance(client, Number(Id));
+            }
+
+        });
+    });
+
+
+    function MapInsurance()
+    {
             var period = $("#insurancePeriod").val();           
             var price = $("#insurancePrice").val();
-            var coveringType = $("#insuranceCoveringType").val();
-            var riskType = $("#insuranceRiskTypeId").val();
-            var client = $("#insuranceClient").val();
+            var coveringType = $("#insuranceCoveringType option:selected").val();
+            var riskType = $("#insuranceRiskTypeId option:selected").val();  
+            var client = $("#insuranceClient option:selected").val();             
 
             insurance = new Object();
             insurance.name = $("#insuranceName").val();            
@@ -112,10 +138,10 @@
             insurance.coveringType = null;
             insurance.riskType = null;
             insurance.client = null;
-           
-            AddInsurance(insurance);
-        });
-    });
+
+        return insurance;
+    }
+
 
      function GetAllInsurances() {
         $.ajax({
@@ -136,6 +162,10 @@
                         "<td id='Period' class='Period'>" + item.period + "</td>" +
                         "<td id='Price' class='Price'>" + item.price + "</td>" +    
                         "<td id='Client' class='Client'>" + item.client.name + "</td>" +
+                        "<td id='ClientId' class='ClientId' style='display:none;'>" + item.client.id + "</td>" +
+                        "<td id='InsuranceId' class='InsuranceId' style='display:none;'>" + item.id + "</td>" +
+                        "<td id='CoveringType' class='CoveringType' style='display:none;'>" + item.coveringType.id + "</td>" +
+                        "<td id='RiskType' class='RiskType' style='display:none;'>" + item.riskType.id + "</td>" +
                         "<td>" +
                         "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" + 
                         "&nbsp;" +
@@ -144,8 +174,6 @@
                         "</tr>";
                     $('#Table').append(rows);
                 });
-
-                console.log(data);
             },
         });
      }
@@ -166,7 +194,7 @@
                     MessageConfirmation("Insurance Created");
                 }
                 else {
-                    alert("Can't Create Insurance with RiskTpe Top and coverage percentage more than 50% ");
+                    MessageConfirmation("Can't Create Insurance with RiskTpe Top and coverage percentage more than 50% ");
                 }
             },
             error: function (request, message, error) {
@@ -205,24 +233,113 @@
                     MessageConfirmation("Insurance Deleted");
                 }
                 else {
-                    alert("Insurance can't be delete.");
+                    MessageConfirmation("Insurance can't be delete.");
                 }
             }
         });
     }
 
     function EditRow(data)
-    {            
-        var row = $(data).closest("tr");    
-
+    {      
+        var row = $(data).closest("tr");
+        debugger;
         var name = row.find(".Name").text();
         var description = row.find(".Description").text();
-        var description = row.find(".Description").text();
+        var coveringType = row.find(".CoveringType").text();
+        var riskType = row.find(".RiskType").text();
+        var startDate = row.find(".StartDate").text();
+        var period = row.find(".Period").text();
+        var price = row.find(".Price").text();  
+        var clientId = row.find(".ClientId").text();
+        var insuranceId = row.find(".InsuranceId").text();
 
         $("#insuranceName").val(name);
-    
-            
+        $("#insuranceDescription").val(description);
+        $("#insuranceCoveringType").val(coveringType);
+        $("#insuranceRiskTypeId").val(riskType);
+        $("#insuranceValidity").val(startDate);
+        $("#insurancePeriod").val(period);
+        $("#insurancePrice").val(price);
+        $("#insuranceClient").val(clientId);
+        $("#idInsurance").val(insuranceId)
+
     }
 
+    function getCurrentlyDate()
+    {
+        debugger;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;        
+       $("#insuranceValidity").val(today);
+    } 
+
+    function GetAllClient() {
+        $.ajax({
+            type: "GET",
+            url: "/api/Client",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {               
+                $.each(data, function (i, item) {
+                    $("#insuranceClient").append(
+                        "<option value='" + item.id + "'>" + item.name + "</option>");
+                });
+            }
+        });
+    }
+
+    function GetAllCoveringType() {
+        $.ajax({
+            type: "GET",
+            url: "/api/CoveringType",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {                
+                $.each(data, function (i, item) {
+                    $("#insuranceCoveringType").append(
+                        "<option value='" + item.id + "'>" + item.covering + "</option>");
+                });
+            }
+        });
+    }
+
+    function GetAllRiskType() {
+        $.ajax({
+            type: "GET",
+            url: "/api/RiskType",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {                
+                $.each(data, function (i, item) {
+                    $("#insuranceRiskTypeId").append(
+                        "<option value='" + item.id + "'>" + item.type + "</option>");
+                });
+            }
+        });
+    }
+
+    function UpdateInsurance(client, Id) {        
+        $.ajax({
+            url: "/api/Insurance/" + Id,
+            type: 'PUT',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(client),
+            success: function (data) {
+                if (data) {
+                     $("#idTable").find("tr:gt(0)").remove();
+                    GetAllInsurances();
+                    MessageConfirmation("Client Updated");
+                }
+                else {
+                    MessageConfirmation("Can't Create Insurance with RiskTpe Top and coverage percentage more than 50% ");
+                }
+            }
+        });
+    }
+    
 
 </script>

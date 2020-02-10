@@ -62,9 +62,27 @@ namespace GAP.Business.Businnes
             
         }
 
-        public bool UpdInsuranceById(Insurance insurance)
+        public bool UpdInsuranceById(Insurance insurance, int id)
         {
-            throw new NotImplementedException();
+            bool validationBusiness;
+            try
+            {
+                CoveringType coveringType = _insuranceRepository.GetCoveringById(insurance.CoveringTypeId);
+
+                int riskType = insurance.RiskTypeId;
+
+                if (riskType == 4 && coveringType.Percentage > 50)
+                    validationBusiness = false;
+                else
+                    validationBusiness = _insuranceRepository.UpdInsuranceById(insurance, id);
+
+                return validationBusiness;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
     }
 }

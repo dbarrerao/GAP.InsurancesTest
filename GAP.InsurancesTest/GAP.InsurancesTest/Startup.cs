@@ -1,3 +1,4 @@
+using GAP.Business.Business;
 using GAP.Business.Businnes;
 using GAP.Business.Interfaces;
 using GAP.Repositories;
@@ -35,6 +36,10 @@ namespace GAP.InsurancesTest
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IInsuranceRepository, InsuranceRepository>();
             services.AddScoped<IInsuranceBusiness, InsuranceBusiness>();
+            services.AddScoped<ICoveringTypeBusiness, CoveringTypeBusiness>();
+            services.AddScoped<ICoveringTypeRepository, CoveringTypeRepository>();
+            services.AddScoped<IRiskTypeBusiness, RiskTypeBusiness>();
+            services.AddScoped<IRiskTypeRepository, RiskTypeRepository>();
 
             services.AddSwaggerGen(c =>
             {

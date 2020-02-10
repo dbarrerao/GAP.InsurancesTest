@@ -10,7 +10,7 @@ namespace GAP.Business.Interfaces
         List<Insurance> GetAll();
         Insurance GetById(int id);
         List<Insurance> GetInsuranceByClient(int id);
-        bool UpdInsuranceById(Insurance insurance);
+        bool UpdInsuranceById(Insurance insurance, int id);
         bool DelInsuranceById(int id);
         bool InsertInsurance(Insurance insurance);
     }
