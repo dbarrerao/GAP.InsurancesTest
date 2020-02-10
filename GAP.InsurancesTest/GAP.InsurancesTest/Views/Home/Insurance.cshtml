@@ -72,6 +72,7 @@
                 <th>Period</th>
                 <th>Price</th>
                 <th>Client</th>
+                <th>Action</th>
             </tr>
         </table>
     </div>
@@ -135,6 +136,11 @@
                         "<td id='Period'>" + item.period + "</td>" +
                         "<td id='Price'>" + item.price + "</td>" +    
                         "<td id='Client'>" + item.client.name + "</td>" +
+                        "<td>" +
+                        "<button class='btn btn-outline-warning my-2 my-sm-0' onclick='GetData(this);' my-2 my-sm-0' id='btnSearch' type='button'" + "data-id='" + item.id + "'>Edit</button>" + 
+                        "&nbsp;" +
+                        "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnSearch' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
+                        "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
                 });
@@ -177,6 +183,35 @@
     function clearTable()
     {              
         $("#idTable").find("tr:gt(0)").remove();
+    }
+
+
+
+    function DeleteRow(row)
+    {
+        var action = confirm("Are you sure to remove this client?");
+        if (action == true)
+            DeleteClientById(row);
+    }
+
+    function DeleteClientById(val)
+    {
+        debugger;
+        var idClient = $(val).data("id");
+
+            $.ajax({
+                url: "/api/Insurance/" + idClient,
+                type: 'DELETE',
+                success: function (worked) {
+                    if (worked) {
+                        $(val).parents("tr").remove();
+                        MessageConfirmation("Insurance Deleted");
+                    }
+                    else {
+                        alert("Insurance can't be delete.");
+                    }
+                }
+            });
     }
 
 </script>

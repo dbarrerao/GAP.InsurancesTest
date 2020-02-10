@@ -83,7 +83,21 @@ namespace GAP.Repositories.Repository
 
         public bool UpdInsuranceById(Insurance insurance)
         {
-            throw new NotImplementedException();
+            Insurance insuranceResult = _context.Insurance.FirstOrDefault(x => x.Id == insurance.Id);
+
+            insuranceResult.Name = insurance.Name;
+            insuranceResult.Description = insurance.Description;
+            insuranceResult.CoveringTypeId = insurance.CoveringTypeId;
+            insuranceResult.RiskTypeId = insurance.RiskTypeId;
+            insuranceResult.Period = insurance.Period;
+            insuranceResult.StartDate = insurance.StartDate;
+            insuranceResult.ClientId = insurance.ClientId;
+            insuranceResult.Period = insurance.Period;
+
+
+            _context.Entry(insuranceResult).State = EntityState.Modified;
+            _context.SaveChanges();
+            return true;
         }
          
         public CoveringType GetCoveringById(int id)

@@ -63,7 +63,13 @@ namespace GAP.Repositories.Repository
 
         public bool UpdClientById(Client client)
         {
-            _context.Entry(client).State = EntityState.Modified;
+            Client clientResult = _context.Client.FirstOrDefault(x => x.Id == client.Id);
+
+            clientResult.Document = client.Document;
+            clientResult.Name = client.Name;
+            clientResult.Age = client.Age;
+
+            _context.Entry(clientResult).State = EntityState.Modified;
             _context.SaveChanges();
             return true;
         }

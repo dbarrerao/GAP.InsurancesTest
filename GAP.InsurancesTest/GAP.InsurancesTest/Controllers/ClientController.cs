@@ -30,12 +30,7 @@ namespace GAP.InsurancesTest.Controllers
         [HttpGet("{document}")]
         public ActionResult<Client> GetClientByDocument(int document)
         {
-            var client = _clientBusiness.GetByDocument(document);
-
-            if(client == null)
-            {
-                return NotFound();
-            }
+            var client = _clientBusiness.GetByDocument(document);            
 
             return client;
         }
