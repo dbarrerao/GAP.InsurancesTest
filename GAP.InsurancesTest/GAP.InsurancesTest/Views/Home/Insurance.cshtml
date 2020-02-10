@@ -94,8 +94,7 @@
             
             var client = MapInsurance(); 
 
-            var Id = $("#idInsurance").val();
-            debugger;
+            var Id = $("#idInsurance").val();           
             if (Id == "") {
                 AddInsurance(client);
             }
@@ -180,8 +179,7 @@
      }
 
 
-    function AddInsurance(insurance) {
-        debugger;
+    function AddInsurance(insurance) {     
         console.log(JSON.stringify(insurance));
         $.ajax({
             url: "/api/Insurance",
@@ -243,8 +241,7 @@
 
     function EditRow(data)
     {      
-        var row = $(data).closest("tr");
-        debugger;
+        var row = $(data).closest("tr");        
         var name = row.find(".Name").text();
         var description = row.find(".Description").text();
         var coveringType = row.find(".CoveringType").text();
@@ -268,8 +265,7 @@
     }
 
     function getCurrentlyDate()
-    {
-        debugger;
+    {       
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

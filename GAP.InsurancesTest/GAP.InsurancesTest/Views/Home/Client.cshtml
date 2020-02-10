@@ -67,8 +67,7 @@
                 });
 
                 $("#addClient").on("click", function () {
-
-                    debugger;
+                    
                     client = new Object();
                     client.name = $("#clientName").val();
                     client.document = $("#clientDocument").val();
@@ -98,8 +97,7 @@
                 });
             }
 
-            function GetClientByDocument(document) {
-                debugger;
+            function GetClientByDocument(document) {              
 
                 $.ajax({
                     type: "GET",                  
