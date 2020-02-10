@@ -128,18 +128,18 @@
                 $.each(data, function (i, item) {                   
                     var rows =
                         "<tr>" +
-                        "<td id='Name'>" + item.name + "</td>" +
-                        "<td id='Description'>" + item.description + "</td>" +
-                        "<td id='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
-                        "<td id='RiskTypeId'>" + item.riskType.type + "</td>" +
-                        "<td id='StartDate'>" + item.startDate + "</td>" +
-                        "<td id='Period'>" + item.period + "</td>" +
-                        "<td id='Price'>" + item.price + "</td>" +    
-                        "<td id='Client'>" + item.client.name + "</td>" +
+                        "<td id='Name' class='Name'>" + item.name + "</td>" +
+                        "<td id='Description' class='Description'>" + item.description + "</td>" +
+                        "<td id='CoveringTypeId' class='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
+                        "<td id='RiskTypeId' class='RiskTypeId'>" + item.riskType.type + "</td>" +
+                        "<td id='StartDate' class='StartDate'>" + item.startDate + "</td>" +
+                        "<td id='Period' class='Period'>" + item.period + "</td>" +
+                        "<td id='Price' class='Price'>" + item.price + "</td>" +    
+                        "<td id='Client' class='Client'>" + item.client.name + "</td>" +
                         "<td>" +
-                        "<button class='btn btn-outline-warning my-2 my-sm-0' onclick='GetData(this);' my-2 my-sm-0' id='btnSearch' type='button'" + "data-id='" + item.id + "'>Edit</button>" + 
+                        "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" + 
                         "&nbsp;" +
-                        "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnSearch' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
+                        "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnDelete' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
                         "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
@@ -184,9 +184,7 @@
     {              
         $("#idTable").find("tr:gt(0)").remove();
     }
-
-
-
+       
     function DeleteRow(row)
     {
         var action = confirm("Are you sure to remove this client?");
@@ -195,23 +193,36 @@
     }
 
     function DeleteClientById(val)
-    {
-        debugger;
+    {   
         var idClient = $(val).data("id");
 
-            $.ajax({
-                url: "/api/Insurance/" + idClient,
-                type: 'DELETE',
-                success: function (worked) {
-                    if (worked) {
-                        $(val).parents("tr").remove();
-                        MessageConfirmation("Insurance Deleted");
-                    }
-                    else {
-                        alert("Insurance can't be delete.");
-                    }
+        $.ajax({
+            url: "/api/Insurance/" + idClient,
+            type: 'DELETE',
+            success: function (worked) {
+                if (worked) {
+                    $(val).parents("tr").remove();
+                    MessageConfirmation("Insurance Deleted");
                 }
-            });
+                else {
+                    alert("Insurance can't be delete.");
+                }
+            }
+        });
     }
+
+    function EditRow(data)
+    {            
+        var row = $(data).closest("tr");    
+
+        var name = row.find(".Name").text();
+        var description = row.find(".Description").text();
+        var description = row.find(".Description").text();
+
+        $("#insuranceName").val(name);
+    
+            
+    }
+
 
 </script>
