@@ -37,25 +37,17 @@
                 <div class="form-group">
                     <label for="clientId">Client</label>
                     <select id="insuranceClient" class="form-control"></select>
-                    <input type="text" id="idInsurance" class="form-control" />
+                    <input type="text" id="idInsurance" class="form-control" style="display:none" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3 text">
                     <button type="button" id="saveClient" class="btn btn-info">Save</button>
+                    <button type="button" id="cleanClient" class="btn btn-info">Clean</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</br>
-<div class="card">
-
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="txtSearch" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" id="btnSearch" type="button">Search</button>
-    </form>
-
 </div>
 <br />
 <br />
@@ -94,11 +86,8 @@
         GetAllCoveringType();
         GetAllRiskType();
 
-
-        $("#btnSearch").on("click", function () {
-            var document = $("#txtSearch").val();
-
-            GetClientByDocument(document);
+        $("#cleanClient").on("click", function () {
+            CleanForm();
         });
 
         $("#saveClient").on("click", function () {
@@ -117,6 +106,18 @@
         });
     });
 
+    function CleanForm() {    
+        $("#insuranceName").val("");
+        $("#insuranceDescription").val("");
+        $("#insuranceCoveringType").val("");
+        $("#insuranceRiskTypeId").val("");
+        $("#insuranceValidity").val("");
+        $("#insurancePeriod").val("");
+        $("#insurancePrice").val("");
+        $("#insuranceClient").val("");
+        $("#idInsurance").val("")
+
+    }
 
     function MapInsurance()
     {
@@ -189,7 +190,8 @@
             data: JSON.stringify(insurance),
             success: function (data) {
                 if (data) {
-                    clearTable();
+                     $("#idTable").find("tr:gt(0)").remove();
+                    CleanForm();
                     GetAllInsurances();
                     MessageConfirmation("Insurance Created");
                 }
@@ -330,7 +332,8 @@
             data: JSON.stringify(client),
             success: function (data) {
                 if (data) {
-                     $("#idTable").find("tr:gt(0)").remove();
+                    $("#idTable").find("tr:gt(0)").remove();
+                    CleanForm();
                     GetAllInsurances();
                     MessageConfirmation("Client Updated");
                 }
