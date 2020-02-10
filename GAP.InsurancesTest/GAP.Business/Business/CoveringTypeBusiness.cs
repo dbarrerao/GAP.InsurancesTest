@@ -20,5 +20,10 @@ namespace GAP.Business.Business
         {
             return _coveringType.GetAll();
         }
+
+        public CoveringType GetbyId(int id)
+        {
+            return _coveringType.GetbyId(id);
+        }
     }
 }

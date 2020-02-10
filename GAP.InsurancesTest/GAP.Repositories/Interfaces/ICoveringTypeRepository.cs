@@ -8,5 +8,6 @@ namespace GAP.Repositories.Interfaces
     public interface ICoveringTypeRepository
     {
         List<CoveringType> GetAll();
+        CoveringType GetbyId(int id);
     }
 }

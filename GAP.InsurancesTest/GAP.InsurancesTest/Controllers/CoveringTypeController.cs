@@ -23,6 +23,6 @@ namespace GAP.InsurancesTest.Controllers
         {
             return _coveringType.GetAll();
         }
-        
+
     }
 }

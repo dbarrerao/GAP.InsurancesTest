@@ -44,10 +44,8 @@ namespace GAP.Tests.Business
         {
             // Arrange
             int document = 98695330;
-
             // Act
             Client client = _clientBusiness.GetByDocument(document);
-
             // Assert
             Assert.IsNotNull(client);
             Assert.AreEqual("Diego Barrera", client.Name);
@@ -59,19 +57,12 @@ namespace GAP.Tests.Business
         {
             // Arrange
             int document = 123;
-
+            // Act
             Client client = _clientBusiness.GetByDocument(document);
-
+            // Assert
             Assert.IsNotNull(client);
 
         }
 
-
-
-
-        // Act
-
-
-        // Assert
     }
 }

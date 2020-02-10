@@ -10,10 +10,12 @@ namespace GAP.Business.Businnes
     public class InsuranceBusiness : IInsuranceBusiness
     {
         private IInsuranceRepository _insuranceRepository;
+        private ICoveringTypeRepository _coveringTypeRepository;
 
-        public InsuranceBusiness(IInsuranceRepository insuranceRepository)
+        public InsuranceBusiness(IInsuranceRepository insuranceRepository, ICoveringTypeRepository coveringTypeRepository)
         {
             _insuranceRepository = insuranceRepository;
+            _coveringTypeRepository = coveringTypeRepository;
         }
 
 
@@ -42,7 +44,8 @@ namespace GAP.Business.Businnes
             bool validationBusiness;
             try
             {
-                CoveringType coveringType = _insuranceRepository.GetCoveringById(insurance.CoveringTypeId);
+              
+                CoveringType coveringType = _coveringTypeRepository.GetbyId(insurance.CoveringTypeId);
 
                 int riskType = insurance.RiskTypeId;
 
@@ -64,10 +67,10 @@ namespace GAP.Business.Businnes
 
         public bool UpdInsuranceById(Insurance insurance, int id)
         {
-            bool validationBusiness;
+            bool validationBusiness;           
             try
-            {
-                CoveringType coveringType = _insuranceRepository.GetCoveringById(insurance.CoveringTypeId);
+            {               
+                CoveringType coveringType = _coveringTypeRepository.GetbyId(insurance.CoveringTypeId);
 
                 int riskType = insurance.RiskTypeId;
 

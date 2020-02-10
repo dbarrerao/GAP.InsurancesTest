@@ -8,5 +8,6 @@ namespace GAP.Business.Interfaces
     public interface ICoveringTypeBusiness
     {
         List<CoveringType> GetAll();
+        CoveringType GetbyId(int id);
     }
 }

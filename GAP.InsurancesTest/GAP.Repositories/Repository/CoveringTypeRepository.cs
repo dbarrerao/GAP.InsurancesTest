@@ -20,5 +20,10 @@ namespace GAP.Repositories.Repository
         {
             return _context.CoveringType.ToList();  
         }
+
+        public CoveringType GetbyId(int id)
+        {
+            return _context.CoveringType.FirstOrDefault(x => x.Id == id);
+        }
     }
 }
