@@ -15,15 +15,15 @@
                     <input type="text" id="insuranceDescription" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="coveringType">Covering Type</label>
+                    <label for="coveringTypeId">Covering Type</label>
                     <input type="text" id="insuranceCoveringType" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="riskType">Risk Type</label>
+                    <label for="riskTypeId">Risk Type</label>
                     <input type="text" id="insuranceRiskTypeId" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="validity">Validity</label>
+                    <label for="startDate">Validity</label>
                     <input type="text" id="insuranceValidity" class="form-control" />
                 </div>
                 <div class="form-group">
@@ -35,7 +35,7 @@
                     <input type="text" id="insurancePrice" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="client">Client</label>
+                    <label for="clientId">Client</label>
                     <input type="text" id="insuranceClient" class="form-control" />
                 </div>
             </div>
@@ -92,16 +92,25 @@
         });
 
         $("#addClient").on("click", function () {
-            
+
+            var period = $("#insurancePeriod").val();           
+            var price = $("#insurancePrice").val();
+            var coveringType = $("#insuranceCoveringType").val();
+            var riskType = $("#insuranceRiskTypeId").val();
+            var client = $("#insuranceClient").val();
+
             insurance = new Object();
             insurance.name = $("#insuranceName").val();            
             insurance.description = $("#insuranceDescription").val();           
             insurance.startDate = $("#insuranceValidity").val();
-            insurance.period = $("#insurancePeriod").val();
-            insurance.price = $("#insurancePrice").val();
-            insurance.coveringType = $("#insuranceCoveringType").val();
-            insurance.riskType = $("#insuranceRiskTypeId").val();
-            insurance.client = $("#insuranceClient").val();
+            insurance.period =  Number(period);
+            insurance.price = Number(price);
+            insurance.coveringTypeId = Number(coveringType);
+            insurance.riskTypeId = Number(riskType);
+            insurance.clientId = Number(client);
+            insurance.coveringType = null;
+            insurance.riskType = null;
+            insurance.client = null;
            
             AddInsurance(insurance);
         });
@@ -115,8 +124,7 @@
             dataType: "json",
             success: function (data) {
                 $('#idTable').show();
-                $.each(data, function (i, item) {
-                    debugger;
+                $.each(data, function (i, item) {                   
                     var rows =
                         "<tr>" +
                         "<td id='Name'>" + item.name + "</td>" +
@@ -139,6 +147,7 @@
 
     function AddInsurance(insurance) {
         debugger;
+        console.log(JSON.stringify(insurance));
         $.ajax({
             url: "/api/Insurance",
             type: 'POST',

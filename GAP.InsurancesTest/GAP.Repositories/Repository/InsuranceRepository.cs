@@ -85,5 +85,10 @@ namespace GAP.Repositories.Repository
         {
             throw new NotImplementedException();
         }
+         
+        public CoveringType GetCoveringById(int id)
+        {
+            return _context.CoveringType.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

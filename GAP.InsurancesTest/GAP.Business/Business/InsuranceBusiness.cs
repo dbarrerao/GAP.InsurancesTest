@@ -39,10 +39,17 @@ namespace GAP.Business.Businnes
 
         public bool InsertInsurance(Insurance insurance)
         {
-           
-            
-            
-            return _insuranceRepository.InsertInsurance(insurance);
+            bool validationBusiness = false;
+            CoveringType risk = _insuranceRepository.GetCoveringById(insurance.RiskTypeId);
+
+            int riskType = insurance.RiskTypeId;
+
+            if (riskType == 5 && risk.Percentage <= 50)
+            {
+                validationBusiness = _insuranceRepository.InsertInsurance(insurance);
+            }
+
+            return validationBusiness;
         }
 
         public bool UpdInsuranceById(Insurance insurance)

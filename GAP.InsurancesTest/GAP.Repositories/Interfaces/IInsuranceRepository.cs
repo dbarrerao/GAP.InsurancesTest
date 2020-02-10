@@ -13,5 +13,7 @@ namespace GAP.Repositories.Interfaces
         bool UpdInsuranceById(Insurance insurance);
         bool DelInsuranceById(int id);
         bool InsertInsurance(Insurance insurance);
+
+        CoveringType GetCoveringById(int id);
     }
 }
