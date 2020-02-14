@@ -38,7 +38,7 @@ namespace GAP.Repositories.Repository
 
         public List<Client> GetAll()
         {
-            return _context.Client.ToList();
+            return _context.Client.Include(x => x.Insurance).ToList();
         }
 
         public Client GetByDocument(int documento)

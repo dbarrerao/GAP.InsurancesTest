@@ -50,11 +50,12 @@
         <div class="col-md-10 mx-auto">
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <table class="table table-bordered" id="Table">
+                    <table class="table table-striped" id="Table">
                         <tr>
                             <th>Document</th>
                             <th>Name</th>
                             <th>Age</th>
+                            <th>Insurances</th>
                         </tr>
                     </table>
                 </div>                
@@ -87,8 +88,6 @@
             }
          });
 
-
-
         function ObjectClient()
         {
             client = new Object();
@@ -98,31 +97,51 @@
 
             return client;
         }
-    });
+     });
 
     function GetAllClient() {
+        $("body").loading('start');
         $.ajax({
             type: "GET",
             url: "/api/Client",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+                debugger;
                 $('#idTable').show();
                 $.each(data, function (i, item) {
+                   
                     var rows =
                         "<tr>" +
                         "<td id='Document'>" + item.document + "</td>" +
                         "<td id='Name'>" + item.name + "</td>" +
                         "<td id='Age'>" + item.age + "</td>" +
+                        "<td>" 
+                        if (item.insurance.length > 0)
+                        {
+                           + "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.id + "'>View</button>"
+                        } 
+                        "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
+                    console.log(rows)
                 });
-            }
+            },
+            complete: function (xhr, status) {
+                    $("body").loading('stop');
+                }
         });
     }
 
-    function GetClientByDocument(document) {
+    function SentRow(val)
+    {
+        var idClient = $(val).data("id");
+         window.location.href = '@Url.Action("Insurance", "Home")';
+    }
 
+
+    function GetClientByDocument(document) {
+        $("body").loading('start');
         $.ajax({
             type: "GET",
             url: "/api/Client/" + document,
@@ -134,17 +153,21 @@
                     $('#idTable').show();
                     var rows =
                         "<tr>" +
-                        "<td id='Document'>" + data.Document + "</td>" +
-                        "<td id='Name'>" + data.Name + "</td>" +
+                        "<td id='Document'>" + data.document + "</td>" +
+                        "<td id='Name'>" + data.name + "</td>" +
                         "<td id='Age'>" + data.age + "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
                 }
+            },
+            complete: function (xhr, status) {
+               $("body").loading('stop');
             }
         });
     }
 
     function AddClient(client) {
+        $("body").loading('start');
         $.ajax({
             url: "/api/Client",
             type: 'POST',
@@ -159,13 +182,15 @@
                 else {
                     alert("Error Creating Client.");
                 }
+            },
+            complete: function (xhr, status) {
+               $("body").loading('stop');
             }
             
         });
 
         function MessageConfirmation(message) {
             alert(message);
-        }
-
+        }      
     }
 </script>
