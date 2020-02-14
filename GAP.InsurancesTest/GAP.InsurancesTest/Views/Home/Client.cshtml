@@ -1,57 +1,64 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model GAP.Models.Client;
 
-<div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="clientName" class="form-control" />
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            @using (Html.BeginForm("Client", "Home", FormMethod.Post, new { @id = "frmClient", @name = "frmClient", @class = "form-horizontal" }))
+            {
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(m => m.Document, new { @style = "font-weight: bold" })
+                        @Html.TextBoxFor(m => m.Document, new { @class = "form-control", @placeholder = "Document" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(m => m.Name, new { @style = "font-weight: bold" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="document">Document</label>
-                    <input type="text" id="clientDocument" class="form-control" />
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(m => m.Age, new { @style = "font-weight: bold" })
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "Age" })
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="text" id="clientAge" class="form-control" />
+                <button type="submit" id="addClient" class="btn btn-success px-4 float-left">Add Client</button>
+            }
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Document" id="txtSearch" aria-label="Search">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3 text">
-                    <button type="button" id="addClient" class="btn btn-info">Add</button>
+                <div class="col-sm-6">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="btnSearch" type="button">Search</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</br>
-<div class="card">
-
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="txtSearch" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" id="btnSearch" type="button">Search</button>
-    </form>
-
-</div>
-<br />
-<br />
-<div class="panel panel-primary" id="idTable">
-    <div class="panel-heading">
-    </div>
-    <div class="panel-body">
-        <table class="table table-bordered" id="Table">
-            <tr>
-                <th>Document</th>
-                <th>Name</th>
-                <th>Age</th>
-            </tr>
-        </table>
+    <div class="row" id="idTable">
+        <div class="col-md-10 mx-auto">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered" id="Table">
+                        <tr>
+                            <th>Document</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                        </tr>
+                    </table>
+                </div>                
+            </div>
+        </div>
     </div>
 </div>
-
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -69,9 +76,9 @@
         $("#addClient").on("click", function () {
 
             client = new Object();
-            client.name = $("#clientName").val();
-            client.document = $("#clientDocument").val();
-            client.age = $("#clientAge").val();
+            client.Name = $("#Name").val();
+            client.Document = $("#Document").val();
+            client.age = $("#Age").val();
             AddClient(client)
         });
     });
@@ -88,7 +95,7 @@
                     var rows =
                         "<tr>" +
                         "<td id='Document'>" + item.document + "</td>" +
-                        "<td id='Name'>" + item.name + "</td>" +
+                        "<td id='Name'>" + item.document + "</td>" +
                         "<td id='Age'>" + item.age + "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
@@ -110,8 +117,8 @@
                     $('#idTable').show();
                     var rows =
                         "<tr>" +
-                        "<td id='Document'>" + data.document + "</td>" +
-                        "<td id='Name'>" + data.name + "</td>" +
+                        "<td id='Document'>" + data.Document + "</td>" +
+                        "<td id='Name'>" + data.Name + "</td>" +
                         "<td id='Age'>" + data.age + "</td>" +
                         "</tr>";
                     $('#Table').append(rows);
