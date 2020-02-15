@@ -9,6 +9,8 @@
         <div class="col-md-10 mx-auto">
             @using (Html.BeginForm("Client", "Home", FormMethod.Post, new { @id = "frmClient", @name = "frmClient", @class = "form-horizontal" }))
             {
+                <h5 style="text-align:center; color:cadetblue"><srtong>CLIENTS</srtong></h5>
+                <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         @Html.LabelFor(m => m.Document, new { @style = "font-weight: bold" })
@@ -117,7 +119,7 @@
                         "<td>" 
                         if (item.insurance.length > 0)
                         {
-                           rows+= "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.document + "'>View</button>"
+                           rows+= "<button class='btn btn-outline-info my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.document + "'>View</button>"
                         } 
                         "</td>" +
                         "</tr>";
@@ -160,7 +162,7 @@
                         "<td id='Age'>" + data.age + "</td>" 
                         if (data.insurance.length > 0)
                         {
-                           rows+= "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + data.document + "'>View</button>"
+                           rows+= "<button class='btn btn-outline-info my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + data.document + "'>View</button>"
                         } 
                         "</tr>";
                     $('#Table').append(rows);

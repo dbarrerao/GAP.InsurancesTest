@@ -9,7 +9,7 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: white;
 }
 
 .btn-primary {
@@ -73,4 +73,9 @@ body {
 .backgroundControl {
     background-color: #0CA785;
     color: white;
+}
+
+.bg-dark {
+    background-color: #0CA785 !important;
+};
 }
