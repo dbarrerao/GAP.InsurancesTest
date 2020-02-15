@@ -8,6 +8,8 @@
         <div class="col-md-10 mx-auto">
             @using (Html.BeginForm("Insurance", "Home", FormMethod.Post, new { @id = "frmInsurance", @name = "frmInsurance", @class = "form-horizontal" }))
             {
+                <h5 style="text-align:center; color:cadetblue"><srtong>INSURANCES</srtong></h5>
+                <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         @Html.LabelFor(m => m.Name, new { @style = "font-weight: bold" })
@@ -23,12 +25,12 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         @Html.LabelFor(m => m.CoveringTypeId, new { @style = "font-weight: bold" })
-                        @Html.TextBoxFor(m => m.CoveringTypeId, new { @class = "form-control", @placeholder = "Select Option" })
+                        @Html.DropDownListFor(m => m.CoveringTypeId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", @placeholder = "Select Option" })
                         @Html.ValidationMessageFor(m => m.CoveringTypeId, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         @Html.LabelFor(m => m.RiskTypeId, new { @style = "font-weight: bold" })
-                        @Html.TextBoxFor(m => m.RiskTypeId, new { @class = "form-control", @placeholder = "Select Option" })
+                        @Html.DropDownListFor(m => m.RiskTypeId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", @placeholder = "Select Option" })
                         @Html.ValidationMessageFor(m => m.RiskTypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -52,74 +54,22 @@
                     </div>
                     <div class="col-sm-6">
                         @Html.LabelFor(m => m.ClientId, new { @style = "font-weight: bold" })
-                        @Html.TextBoxFor(m => m.ClientId, new { @class = "form-control", @placeholder = "Select Option" })
+                        @Html.DropDownListFor(m => m.ClientId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", @placeholder = "Select Option" })
                         @Html.ValidationMessageFor(m => m.ClientId, "", new { @class = "text-danger" })
-                        @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @style = "display:none"})                       
+                        @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @style = "display:none" })
                     </div>
                 </div>
-                <button type="submit" id="saveClient" class="btn backgroundControl px-4 float-left">Save</button>
-                <button type="submit" id="cleanClient" class="btn backgroundControl px-4 float-left">Clean</button>
+                <button type="submit" id="txtInsurances" class="btn backgroundControl px-4 float-left">Save</button>
+                <button type="button" id="cleanClient" class="btn backgroundControl px-4 float-left">Clean</button>
             }
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                @*<div class="form-group">
-                        <label for="name">Insurance</label>
-                        <input type="text" id="Name" class="form-control" />
-                    </div>*@
-                @*<div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" id="Description" class="form-control" />
-                    </div>*@
-                @*<div class="form-group">
-                        <label for="coveringTypeId">Covering Type</label>
-                        <select id="CoveringTypeId" class="form-control"></select>
-                    </div>*@
-                @*<div class="form-group">
-                        <label for="riskTypeId">Risk Type</label>
-                        <select id="RiskTypeId" class="form-control"></select>
-                    </div>*@
-                @*<div class="form-group">
-                        <label for="startDate">Validity</label>
-                        <input type="text" id="StartDate" class="form-control" />
-                    </div>*@
-                @*<div class="form-group">
-                        <label for="period">Period</label>
-                        <input type="text" id="Period" class="form-control" />
-                    </div>*@
-                @*<div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="text" id="Price" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="clientId">Client</label>
-                    <select id="ClientId" class="form-control"></select>
-                    <input type="text" id="Id" class="form-control" style="display:none" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3 text">
-                    <button type="button" id="saveClient" class="btn btn-info">Save</button>
-                    <button type="button" id="cleanClient" class="btn btn-info">Clean</button>
-                </div>*@
-            </div>
         </div>
     </div>
 </div>
 <div class="container py-5">
     <div class="row">
         <div class="col-md-10 mx-auto">
-            <div class="form-group row">
-                <div class="col-sm-3">
-                    <input class="form-control mr-sm-2" type="search" placeholder="N° Insurance" id="txtInsurances" >
-                </div>
-                <div class="col-sm-3">
+            <div class="form-group row">               
+                <div class="col-sm-6">
                     <input class="form-control mr-sm-2" type="search" placeholder="Client's Document" id="txtDocument" value="@TempData["document"]">
                 </div>
                 <div class="col-sm-6">
@@ -154,23 +104,19 @@
 </div>
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            debugger;
+        $(document).ready(function () {           
             var doc = $('#txtDocument').val();
             doc = Number(doc);
-            if (doc > 0) {
-                
+            if (doc > 0) {                
                 GetInsurancesByDocument(doc);
             }
             else
-            {
+            {               
                 $('#txtDocument').val("");
                 GetAllInsurances();
             }
-
            
             $('#idTable').hide();
-
             getCurrentlyDate();
             GetAllClient();
             GetAllCoveringType();
@@ -181,18 +127,31 @@
                 CleanForm();
             });
 
-            $("#saveClient").on("click", function () {
+            $("#btnSearch").on("click", function () {               
+                var doc = $('#txtDocument').val();   
+                if (doc == "")
+                {
+                    GetAllInsurances();
+                }
+                else
+                {
+                     doc = Number(doc);
+                    GetInsurancesByDocument(doc);
+                }
+            });
 
-                var client = MapInsurance();
-
+            $("#frmInsurance").on("submit", function (event) {
+                event.preventDefault();               
+                var validateForm = $("#frmInsurance").valid();
                 var Id = $("#Id").val();
-                if (Id == "") {
-                    AddInsurance(client);
-                }
-                else {
-                    UpdateInsurance(client, Number(Id));
-                }
 
+                if (validateForm)
+                     var insurance = MapInsurance();
+                   
+                if (Id == "")
+                    AddInsurance(insurance);               
+                else 
+                    UpdateInsurance(insurance, Number(Id));
             });
         });
 
@@ -205,12 +164,7 @@
             $("#Period").val("");
             $("#Price").val("");
             $("#ClientId").val("");
-            $("#Id").val("");
-            $("#txtDocument").val("");
-            $("#txtInsurances").val("");
-
-             GetAllInsurances();
-
+            $("#Id").val("");     
         }
 
         function MapInsurance() {
@@ -238,79 +192,94 @@
 
 
         function GetAllInsurances() {
+            $("body").loading('start');
             $.ajax({
                 type: "GET",
                 url: "/api/Insurance",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (data) {
-                    $('#idTable').show();
-                    $.each(data, function (i, item) {
-                        var rows =
-                            "<tr>" +
-                            "<td id='Id' class='Id'>" + item.id + "</td>" +
-                            "<td id='Name' class='Name'>" + item.name + "</td>" +
-                            "<td id='Description' class='Description'>" + item.description + "</td>" +
-                            "<td id='CoveringTypeId' class='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
-                            "<td id='RiskTypeId' class='RiskTypeId'>" + item.riskType.type + "</td>" +
-                            "<td id='StartDate' class='StartDate'>" + item.startDate + "</td>" +
-                            "<td id='Period' class='Period'>" + item.period + "</td>" +
-                            "<td id='Price' class='Price'>" + item.price + "</td>" +
-                            "<td id='Client' class='Client'>" + item.client.name + "</td>" +
-                            "<td id='ClientId' class='ClientId' style='display:none;'>" + item.client.id + "</td>" +
-                            "<td id='InsuranceId' class='InsuranceId' style='display:none;'>" + item.id + "</td>" +
-                            "<td id='CoveringType' class='CoveringType' style='display:none;'>" + item.coveringType.id + "</td>" +
-                            "<td id='RiskType' class='RiskType' style='display:none;'>" + item.riskType.id + "</td>" +
-                            "<td>" +
-                            "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" +
-                            "&nbsp;" +
-                            "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnDelete' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
-                            "</td>" +
-                            "</tr>";
-                        $('#Table').append(rows);
-                    });
-                },
+                success: function (data) {                   
+                    $("#idTable").find("tr:gt(0)").remove();
+                    if (data != null)
+                    {                
+                        $('#idTable').show();
+                        $.each(data, function (i, item) {
+                            var rows =
+                                "<tr>" +
+                                "<td id='Id' class='Id'>" + item.id + "</td>" +
+                                "<td id='Name' class='Name'>" + item.name + "</td>" +
+                                "<td id='Description' class='Description'>" + item.description + "</td>" +
+                                "<td id='CoveringTypeId' class='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
+                                "<td id='RiskTypeId' class='RiskTypeId'>" + item.riskType.type + "</td>" +
+                                "<td id='StartDate' class='StartDate'>" + item.startDate + "</td>" +
+                                "<td id='Period' class='Period'>" + item.period + "</td>" +
+                                "<td id='Price' class='Price'>" + item.price + "</td>" +
+                                "<td id='Client' class='Client'>" + item.client.name + "</td>" +
+                                "<td id='ClientId' class='ClientId' style='display:none;'>" + item.client.id + "</td>" +
+                                "<td id='InsuranceId' class='InsuranceId' style='display:none;'>" + item.id + "</td>" +
+                                "<td id='CoveringType' class='CoveringType' style='display:none;'>" + item.coveringType.id + "</td>" +
+                                "<td id='RiskType' class='RiskType' style='display:none;'>" + item.riskType.id + "</td>" +
+                                "<td>" +
+                                "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" +
+                                "&nbsp;" +
+                                "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnDelete' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
+                                "</td>" +
+                                "</tr>";
+                            $('#Table').append(rows);
+                        });
+                    }
+                },                
+                complete: function (xhr, status) {
+                        $("body").loading('stop');
+                    }
             });
         }
 
-        function GetInsurancesByDocument(id) {
+        function GetInsurancesByDocument(id) {  
+            $("body").loading('start');
             $.ajax({
                 type: "GET",
-                url: "/api/GetByIdClient/" + id,
+                url: "/api/Insurance/GetByIdClient/" + id,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    $('#idTable').show();
-                    $.each(data, function (i, item) {
-                        var rows =
-                            "<tr>" +
-                            "<td id='Id' class='Id'>" + item.id + "</td>" +
-                            "<td id='Name' class='Name'>" + item.name + "</td>" +
-                            "<td id='Description' class='Description'>" + item.description + "</td>" +
-                            "<td id='CoveringTypeId' class='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
-                            "<td id='RiskTypeId' class='RiskTypeId'>" + item.riskType.type + "</td>" +
-                            "<td id='StartDate' class='StartDate'>" + item.startDate + "</td>" +
-                            "<td id='Period' class='Period'>" + item.period + "</td>" +
-                            "<td id='Price' class='Price'>" + item.price + "</td>" +
-                            "<td id='Client' class='Client'>" + item.client.name + "</td>" +
-                            "<td id='ClientId' class='ClientId' style='display:none;'>" + item.client.id + "</td>" +
-                            "<td id='InsuranceId' class='InsuranceId' style='display:none;'>" + item.id + "</td>" +
-                            "<td id='CoveringType' class='CoveringType' style='display:none;'>" + item.coveringType.id + "</td>" +
-                            "<td id='RiskType' class='RiskType' style='display:none;'>" + item.riskType.id + "</td>" +
-                            "<td>" +
-                            "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" +
-                            "&nbsp;" +
-                            "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnDelete' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
-                            "</td>" +
-                            "</tr>";
-                        $('#Table').append(rows);
-                    });
+                    $("#idTable").find("tr:gt(0)").remove();
+                    if (data != null) {
+                        $('#idTable').show();
+                        $.each(data, function (i, item) {
+                            var rows =
+                                "<tr>" +
+                                "<td id='Id' class='Id'>" + item.id + "</td>" +
+                                "<td id='Name' class='Name'>" + item.name + "</td>" +
+                                "<td id='Description' class='Description'>" + item.description + "</td>" +
+                                "<td id='CoveringTypeId' class='CoveringTypeId'>" + item.coveringType.covering + "</td>" +
+                                "<td id='RiskTypeId' class='RiskTypeId'>" + item.riskType.type + "</td>" +
+                                "<td id='StartDate' class='StartDate'>" + item.startDate + "</td>" +
+                                "<td id='Period' class='Period'>" + item.period + "</td>" +
+                                "<td id='Price' class='Price'>" + item.price + "</td>" +
+                                "<td id='Client' class='Client'>" + item.client.name + "</td>" +
+                                "<td id='ClientId' class='ClientId' style='display:none;'>" + item.client.id + "</td>" +
+                                "<td id='InsuranceId' class='InsuranceId' style='display:none;'>" + item.id + "</td>" +
+                                "<td id='CoveringType' class='CoveringType' style='display:none;'>" + item.coveringType.id + "</td>" +
+                                "<td id='RiskType' class='RiskType' style='display:none;'>" + item.riskType.id + "</td>" +
+                                "<td>" +
+                                "<button class='btn btn-outline-warning my-2 my-sm-0' id='btnEdit' type='button' onclick='EditRow(this);'>Edit</button>" +
+                                "&nbsp;" +
+                                "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='DeleteRow(this);' id='btnDelete' type='button'" + "data-id='" + item.id + "'>Delete</button>" +
+                                "</td>" +
+                                "</tr>";
+                            $('#Table').append(rows);
+                        });
+                    }
                 },
+                complete: function (xhr, status) {
+                    $("body").loading('stop');
+                }
             });
         }
 
         function AddInsurance(insurance) {
-            console.log(JSON.stringify(insurance));
+            $("body").loading('start');
             $.ajax({
                 url: "/api/Insurance",
                 type: 'POST',
@@ -327,8 +296,8 @@
                         MessageConfirmation("Can't Create Insurance with RiskTpe Top and coverage percentage more than 50% ");
                     }
                 },
-                error: function (request, message, error) {
-                    handleException(request, message, error);
+                complete: function (xhr, status) {
+                    $("body").loading('stop');
                 }
             });
         }
@@ -342,14 +311,14 @@
         }
 
         function DeleteRow(row) {
-            var action = confirm("Are you sure to remove this client?");
+            var action = confirm("Are you sure to remove this Insurance?");
             if (action == true)
                 DeleteClientById(row);
         }
 
         function DeleteClientById(val) {
+            $("body").loading('start');
             var idClient = $(val).data("id");
-
             $.ajax({
                 url: "/api/Insurance/" + idClient,
                 type: 'DELETE',
@@ -361,11 +330,15 @@
                     else {
                         MessageConfirmation("Insurance can't be delete.");
                     }
-                }
+                },
+                complete: function (xhr, status) {
+                        $("body").loading('stop');
+                    }
             });
         }
 
         function EditRow(data) {
+             $("body").loading('start');
             var row = $(data).closest("tr");
             var name = row.find(".Name").text();
             var description = row.find(".Description").text();
@@ -386,7 +359,7 @@
             $("#Price").val(price);
             $("#ClientId").val(clientId);
             $("#Id").val(insuranceId)
-
+            $("body").loading('stop');
         }
 
         function getCurrentlyDate() {
@@ -445,6 +418,7 @@
         }
 
         function UpdateInsurance(client, Id) {
+            $("body").loading('start');
             $.ajax({
                 url: "/api/Insurance/" + Id,
                 type: 'PUT',
@@ -460,6 +434,9 @@
                     else {
                         MessageConfirmation("Can't Create Insurance with RiskTpe Top and coverage percentage more than 50% ");
                     }
+                },
+                complete: function (xhr, status) {
+                    $("body").loading('stop');
                 }
             });
         }

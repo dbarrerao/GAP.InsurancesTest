@@ -11,11 +11,15 @@ namespace GAP.Business.Businnes
     {
         private IInsuranceRepository _insuranceRepository;
         private ICoveringTypeRepository _coveringTypeRepository;
+        private IClientRepository _clientRepository;
 
-        public InsuranceBusiness(IInsuranceRepository insuranceRepository, ICoveringTypeRepository coveringTypeRepository)
+        public InsuranceBusiness(IInsuranceRepository insuranceRepository, 
+                                 ICoveringTypeRepository coveringTypeRepository, 
+                                 IClientRepository clientRepository)
         {
             _insuranceRepository = insuranceRepository;
             _coveringTypeRepository = coveringTypeRepository;
+            _clientRepository = clientRepository;
         }
 
 
@@ -36,7 +40,9 @@ namespace GAP.Business.Businnes
 
         public List<Insurance> GetInsuranceByClient(int id)
         {
-            return _insuranceRepository.GetInsuranceByClient(id);
+            Client client = _clientRepository.GetByDocument(id);
+
+            return _insuranceRepository.GetInsuranceByClient(client.Id);
         }
 
         public bool InsertInsurance(Insurance insurance)

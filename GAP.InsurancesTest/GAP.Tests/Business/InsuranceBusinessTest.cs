@@ -20,6 +20,7 @@ namespace GAP.Tests.Business
         {
             var insuranceRepositoryMock = new Mock<IInsuranceRepository>();
             var coveringTypeRepositoryMock = new Mock<ICoveringTypeRepository>();
+            var clientRepositoryMock = new Mock<IClientRepository>();
 
             Insurance insuranceValid = new Insurance();
 
@@ -60,7 +61,7 @@ namespace GAP.Tests.Business
             insuranceRepositoryMock.Setup(x => x.UpdInsuranceById(insuranceIsValid, idInsuranceIsValid)).Returns(Valid);
             insuranceRepositoryMock.Setup(x => x.UpdInsuranceById(insuranceInValid, idInsuranceNoTValid)).Returns(Invalid);
 
-            _insuranceBusiness = new InsuranceBusiness(insuranceRepositoryMock.Object, coveringTypeRepositoryMock.Object);
+            _insuranceBusiness = new InsuranceBusiness(insuranceRepositoryMock.Object, coveringTypeRepositoryMock.Object, clientRepositoryMock.Object);
         }
 
         [TestCleanup]
