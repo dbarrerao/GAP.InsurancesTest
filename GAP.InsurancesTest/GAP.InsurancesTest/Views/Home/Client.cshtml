@@ -28,7 +28,7 @@
                         @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <button type="submit" id="addClient" class="btn btn-success px-4 float-left">Add Client</button>
+                <button type="submit" id="addClient" class="btn backgroundControl px-4 float-left">Add Client</button>
             }
         </div>
     </div>
@@ -41,7 +41,7 @@
                     <input class="form-control mr-sm-2" type="search" placeholder="Document" id="txtSearch" aria-label="Search">
                 </div>
                 <div class="col-sm-6">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="btnSearch" type="button">Search</button>
+                    <button class="btn backgroundControl my-2 my-sm-0" id="btnSearch" type="button">Search</button>
                 </div>
             </div>
         </div>
@@ -52,10 +52,10 @@
                 <div class="col-sm-12">
                     <table class="table table-striped" id="Table">
                         <tr>
-                            <th>Document</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Insurances</th>
+                            <th class="backgroundControl">Document</th>
+                            <th  class="backgroundControl">Name</th>
+                            <th  class="backgroundControl">Age</th>
+                            <th  class="backgroundControl">Insurances</th>
                         </tr>
                     </table>
                 </div>                
@@ -106,8 +106,7 @@
             url: "/api/Client",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {
-                debugger;
+            success: function (data) {                
                 $('#idTable').show();
                 $.each(data, function (i, item) {
                    
@@ -119,12 +118,11 @@
                         "<td>" 
                         if (item.insurance.length > 0)
                         {
-                           + "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.id + "'>View</button>"
+                           rows+= "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.document + "'>View</button>"
                         } 
                         "</td>" +
                         "</tr>";
-                    $('#Table').append(rows);
-                    console.log(rows)
+                    $('#Table').append(rows);                 
                 });
             },
             complete: function (xhr, status) {
@@ -135,8 +133,11 @@
 
     function SentRow(val)
     {
-        var idClient = $(val).data("id");
-         window.location.href = '@Url.Action("Insurance", "Home")';
+        debugger;
+        var document = $(val).data("id");
+        var url = '@Url.Action("Insurance", "Home", new { document = "documentClient"})';
+        url = url.replace("documentClient", document);
+        window.location.href = url
     }
 
 
@@ -147,15 +148,21 @@
             url: "/api/Client/" + document,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {
+            success: function (data) { 
+                   debugger;
                 $("#idTable").find("tr:gt(0)").remove();
                 if (data != null) {
                     $('#idTable').show();
+                   debugger;
                     var rows =
                         "<tr>" +
                         "<td id='Document'>" + data.document + "</td>" +
                         "<td id='Name'>" + data.name + "</td>" +
-                        "<td id='Age'>" + data.age + "</td>" +
+                        "<td id='Age'>" + data.age + "</td>" 
+                        if (data.insurance.length > 0)
+                        {
+                           rows+= "<button class='btn btn-outline-danger my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + data.document + "'>View</button>"
+                        } 
                         "</tr>";
                     $('#Table').append(rows);
                 }

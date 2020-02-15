@@ -28,8 +28,9 @@ namespace GAP.InsurancesTest.Controllers
             return View();
         }
 
-        public IActionResult Insurance()
+        public IActionResult Insurance(int document)
         {
+            TempData["document"] = document;
             return View();
         }
                
