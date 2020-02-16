@@ -50,15 +50,11 @@ namespace GAP.Business.Businnes
             bool validationBusiness;
             try
             {
-              
-                CoveringType coveringType = _coveringTypeRepository.GetbyId(insurance.CoveringTypeId);
-
-                int riskType = insurance.RiskTypeId;
-
-                if (riskType == 4 && coveringType.Percentage > 50)
-                    validationBusiness = false;
-                else
-                    validationBusiness = _insuranceRepository.InsertInsurance(insurance);
+                validationBusiness = ValidateInsurance(insurance.CoveringTypeId, insurance.RiskTypeId);
+                if (validationBusiness)
+                {
+                    _insuranceRepository.InsertInsurance(insurance);
+                }
 
                 return validationBusiness;
             }
@@ -75,15 +71,12 @@ namespace GAP.Business.Businnes
         {
             bool validationBusiness;           
             try
-            {               
-                CoveringType coveringType = _coveringTypeRepository.GetbyId(insurance.CoveringTypeId);
-
-                int riskType = insurance.RiskTypeId;
-
-                if (riskType == 4 && coveringType.Percentage > 50)
-                    validationBusiness = false;
-                else
-                    validationBusiness = _insuranceRepository.UpdInsuranceById(insurance, id);
+            {
+                validationBusiness = ValidateInsurance(insurance.CoveringTypeId, insurance.RiskTypeId);
+                if (validationBusiness)
+                {
+                    _insuranceRepository.UpdInsuranceById(insurance, id);
+                }
 
                 return validationBusiness;
             }
@@ -92,6 +85,18 @@ namespace GAP.Business.Businnes
 
                 throw e;
             }
+        }
+
+        public bool ValidateInsurance(int idCoveringType, int idRiskType)
+        {
+            bool valida = true;
+            CoveringType coveringType = _coveringTypeRepository.GetbyId(idCoveringType);
+            int riskType = idRiskType;
+
+            if (riskType == 4 && coveringType.Percentage > 50)
+                valida = false;
+
+            return valida;
         }
     }
 }

@@ -71,17 +71,13 @@ namespace GAP.Repositories.Repository
             return listInsurance;
         }
 
-        public bool InsertInsurance(Insurance insurance)
-        {
-            bool result;
+        public void InsertInsurance(Insurance insurance)
+        {            
             _context.Add(insurance);
-            _context.SaveChanges();
-            result = true;
-
-            return result;
+            _context.SaveChanges();           
         }
 
-        public bool UpdInsuranceById(Insurance insurance, int id)
+        public void UpdInsuranceById(Insurance insurance, int id)
         {
             Insurance insuranceResult = _context.Insurance.FirstOrDefault(x => x.Id == id);
 
@@ -94,10 +90,9 @@ namespace GAP.Repositories.Repository
             insuranceResult.ClientId = insurance.ClientId;
             insuranceResult.Period = insurance.Period;
 
-
             _context.Entry(insuranceResult).State = EntityState.Modified;
             _context.SaveChanges();
-            return true;
+          
         }
          
         public CoveringType GetCoveringById(int id)

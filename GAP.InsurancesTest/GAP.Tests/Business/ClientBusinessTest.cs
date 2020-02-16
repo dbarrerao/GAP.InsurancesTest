@@ -22,7 +22,7 @@ namespace GAP.Tests.Business
             var clientRepositoryMock = new Mock<IClientRepository>();
 
             Client clientDiego = new Client();
-            clientDiego.Document = 98695330;
+            clientDiego.Document = 98695630;
             clientDiego.Name = "Diego Barrera";
 
             Client clientNull = null;          
