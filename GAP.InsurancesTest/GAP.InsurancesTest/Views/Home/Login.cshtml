@@ -1,4 +1,73 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-@model @GAP.Models.User;
+@model  GAP.Models.User;
+
+
+
+<div class="login-form">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @id = "frmLogin", @name = "frmLogin", @class = "form-horizontal" }))
+    {
+        <div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
+        <div class="form-group">
+            <h5 style="text-align:center; color:cadetblue"><srtong>LOGIN</srtong></h5>
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.UserLogin, new { @class = "form-control", @placeholder = "User" })
+            @Html.ValidationMessageFor(m => m.UserLogin, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Sign In">
+    }
+</div>
+<script>
+        $(document).ready(function () {
+
+            $("#frmLogin").on("submit", function (event) {
+                event.preventDefault();
+                var validateForm = $("#frmLogin").valid();
+                console.log(validateForm);
+                if (validateForm) {
+                    var login = ObjectLogin();
+                    ValidateLogin(login);
+                }
+            });
+        });
+
+        function ValidateLogin(login)
+        {
+            $("#loading").show();         
+            $("body").loading('start');
+            $.ajax({
+                url: "/api/User",
+                type: 'POST',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(login),
+                success: function (data) {
+                    if (data) {
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                    else {
+                        alert('');
+                    }
+                },
+                complete: function (xhr, status) {
+                    $("body").loading('stop');
+                }
+            });
+        }
+
+        function ObjectLogin()
+        {          
+            login = new Object();
+            login.user = $("#User").val();
+            login.password = $("#Password").val();
+            return login;
+        }
+</script>
+
