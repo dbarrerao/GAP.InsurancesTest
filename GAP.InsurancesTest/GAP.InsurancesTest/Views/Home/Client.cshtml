@@ -52,12 +52,12 @@
         <div class="col-md-10 mx-auto">
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <table class="table table-striped" id="Table">
+                    <table class="table table-striped" id="Table" data-paging="true" data-paging-count-format="{CP} de {TP}" data-paging-size="5">
                         <tr>
-                            <th class="backgroundControl">Document</th>
-                            <th  class="backgroundControl">Name</th>
-                            <th  class="backgroundControl">Age</th>
-                            <th  class="backgroundControl">Insurances</th>
+                            <th class="backgroundControl text-center">Document</th>
+                            <th  class="backgroundControl text-center">Name</th>
+                            <th  class="backgroundControl text-center">Age</th>
+                            <th  class="backgroundControl text-center" >Insurances</th>
                         </tr>
                     </table>
                 </div>                
@@ -76,7 +76,13 @@
             var document = $("#txtSearch").val();
             document = Number(document);
 
-            GetClientByDocument(document);
+            if (document == "")
+            {
+                 GetAllClient();
+            } else
+            {
+                GetClientByDocument(document);
+            }            
         });
 
          $("#frmClient").on("submit", function (event) {
@@ -97,6 +103,7 @@
 
             return client;
         }
+        
      });
 
     function GetAllClient() {
@@ -121,9 +128,9 @@
                            rows+= "<button class='btn btn-outline-info my-2 my-sm-0' onclick='SentRow(this);' id='btnSent' type='button'" + "data-id='" + item.document + "'>View</button>"
                         } 
                         "</td>" +
-                        "</tr>";
-                    $('#Table').append(rows);                 
-                });
+                        "</tr>";                    
+                    $('#Table').append(rows);                    
+                });               
             },
             complete: function (xhr, status) {
                     $("body").loading('stop');
