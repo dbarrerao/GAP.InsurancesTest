@@ -3,8 +3,6 @@
 }
 @model  GAP.Models.User;
 
-
-
 <div class="login-form">
     @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @id = "frmLogin", @name = "frmLogin", @class = "form-horizontal" }))
     {
@@ -29,8 +27,7 @@
         $(document).ready(function () {
 
             $("#frmLogin").on("submit", function (event) {
-                event.preventDefault();
-                 debugger;
+                event.preventDefault();              
                 var validateForm = $("#frmLogin").valid();
                 console.log(validateForm);
                 if (validateForm) {
@@ -44,8 +41,7 @@
         function ValidateLogin(login)
         {            
             $("#loading").show();         
-            $("body").loading('start');
-            debugger;
+            $("body").loading('start');          
             $.ajax({                
                 url: "/api/User",
                 type: 'POST',
@@ -66,8 +62,7 @@
         }
 
         function ObjectLogin()
-        {
-            debugger;
+        {          
             login = new Object();
             login.userLogin = $("#UserLogin").val();
             login.password = $("#Password").val();

@@ -80,8 +80,7 @@
         });
 
          $("#frmClient").on("submit", function (event) {
-             event.preventDefault();
-             debugger;
+             event.preventDefault();             
             var validateForm = $("#frmClient").valid();           
             if (validateForm) {
                 var client = ObjectClient();
@@ -133,8 +132,7 @@
     }
 
     function SentRow(val)
-    {
-        debugger;
+    {       
         var document = $(val).data("id");
         var url = '@Url.Action("Insurance", "Home", new { document = "documentClient"})';
         url = url.replace("documentClient", document);
@@ -149,12 +147,10 @@
             url: "/api/Client/" + document,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) { 
-                   debugger;
+            success: function (data) {                  
                 $("#idTable").find("tr:gt(0)").remove();
                 if (data != null) {
-                    $('#idTable').show();
-                   debugger;
+                    $('#idTable').show();                  
                     var rows =
                         "<tr>" +
                         "<td id='Document'>" + data.document + "</td>" +
