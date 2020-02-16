@@ -30,20 +30,23 @@
 
             $("#frmLogin").on("submit", function (event) {
                 event.preventDefault();
+                 debugger;
                 var validateForm = $("#frmLogin").valid();
                 console.log(validateForm);
                 if (validateForm) {
                     var login = ObjectLogin();
                     ValidateLogin(login);
+                   
                 }
             });
         });
 
         function ValidateLogin(login)
-        {
+        {            
             $("#loading").show();         
             $("body").loading('start');
-            $.ajax({
+            debugger;
+            $.ajax({                
                 url: "/api/User",
                 type: 'POST',
                 contentType: "application/json;charset=utf-8",
@@ -53,7 +56,7 @@
                         window.location.href = '@Url.Action("Index", "Home")';
                     }
                     else {
-                        alert('');
+                        alert('Invalid User');
                     }
                 },
                 complete: function (xhr, status) {
@@ -63,9 +66,10 @@
         }
 
         function ObjectLogin()
-        {          
+        {
+            debugger;
             login = new Object();
-            login.user = $("#User").val();
+            login.userLogin = $("#UserLogin").val();
             login.password = $("#Password").val();
             return login;
         }

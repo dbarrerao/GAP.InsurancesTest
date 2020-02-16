@@ -13,6 +13,6 @@ namespace GAP.Models
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "The Password field is required")]
-        public int Password { get; set; }
+        public string Password { get; set; }
     }
 }

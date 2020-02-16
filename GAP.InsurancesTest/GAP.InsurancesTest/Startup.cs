@@ -27,7 +27,7 @@ namespace GAP.InsurancesTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<InsuranceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-           
+
             services.AddControllersWithViews();
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -40,6 +40,8 @@ namespace GAP.InsurancesTest
             services.AddScoped<ICoveringTypeRepository, CoveringTypeRepository>();
             services.AddScoped<IRiskTypeBusiness, RiskTypeBusiness>();
             services.AddScoped<IRiskTypeRepository, RiskTypeRepository>();
+            services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSwaggerGen(c =>
             {
